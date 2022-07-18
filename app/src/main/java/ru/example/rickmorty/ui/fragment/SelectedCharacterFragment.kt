@@ -5,6 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.DecodeFormat
 import dagger.hilt.android.AndroidEntryPoint
 import ru.example.rickmorty.databinding.FragmentSelectedCharacterBinding
 import ru.example.rickmorty.model.CharacterDto
@@ -38,7 +40,15 @@ class SelectedCharacterFragment : Fragment() {
     }
 
     private fun fillData() {
-        binding?.namePerson?.text = character?.title
+        if (character != null && binding != null) {
+            Glide.with(requireContext())
+                .asBitmap()
+                .format(DecodeFormat.PREFER_RGB_565)
+                .centerCrop()
+                .load(character!!.imgUrl)
+                .into(binding!!.characterImage)
+        }
+
     }
 
     companion object {
