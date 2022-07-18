@@ -9,6 +9,19 @@
         android:id="@+id/bottomBar"
         android:name="ru.example.rickmorty.ui.fragment.BottomBarFragment"
         android:label="fragment_episodes"
-        tools:layout="@layout/fragment_bottom_bar" />
+        tools:layout="@layout/fragment_bottom_bar" >
+        <action
+            android:id="@+id/action_bottomBar_to_selectedCharacterFragment"
+            app:destination="@id/selectedCharacterFragment" >
+            <argument
+                android:name="SELECTED_CHARACTER"
+                app:argType="ru.example.rickmorty.model.CharacterDto" />
+        </action>
+    </fragment>
+    <fragment
+        android:id="@+id/selectedCharacterFragment"
+        android:name="ru.example.rickmorty.ui.fragment.SelectedCharacterFragment"
+        android:label="fragment_selected_character"
+        tools:layout="@layout/fragment_selected_character" />
 
 </navigation>

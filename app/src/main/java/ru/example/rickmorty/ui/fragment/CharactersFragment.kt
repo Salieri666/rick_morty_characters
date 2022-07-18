@@ -4,13 +4,16 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
+import ru.example.rickmorty.R
 import ru.example.rickmorty.databinding.FragmentCharactersBinding
 import ru.example.rickmorty.ui.adapter.DefaultLoadStateAdapter
 import ru.example.rickmorty.ui.adapter.RecyclerCharacterAdapter
@@ -59,6 +62,8 @@ class CharactersFragment : Fragment() {
         charactersAdapter = RecyclerCharacterAdapter()
         val footerAdapter = DefaultLoadStateAdapter { charactersAdapter?.refresh() }
         val adapterWithLoadState = charactersAdapter?.withLoadStateFooter(footerAdapter)
+
+        charactersAdapter?.itemClickListener = ::onCharacterClick
 
         val gridLayoutManager = GridLayoutManager(context,  2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
@@ -114,6 +119,13 @@ class CharactersFragment : Fragment() {
                 //mainLoadStateHolder?.bind(state.refresh)
             }
         }
+    }
+
+    private fun onCharacterClick(position: Int) {
+        val selectedCharacter = charactersAdapter?.snapshot()?.items?.get(position)
+        val bundle = bundleOf("SELECTED_CHARACTER" to selectedCharacter)
+
+        Navigation.findNavController(requireActivity(), R.id.main_nav_fragment).navigate(R.id.action_bottomBar_to_selectedCharacterFragment, bundle)
     }
 
     /*private fun setupLoadingCharacterList() {
