@@ -11,7 +11,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.Navigation
 import androidx.paging.LoadState
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.flow.collectLatest
 import ru.example.rickmorty.R
@@ -19,6 +18,7 @@ import ru.example.rickmorty.databinding.FragmentCharactersBinding
 import ru.example.rickmorty.ui.adapter.DefaultLoadStateAdapter
 import ru.example.rickmorty.ui.adapter.RecyclerCharacterAdapter
 import ru.example.rickmorty.ui.viewModel.CharacterViewModel
+
 
 @AndroidEntryPoint
 class CharactersFragment : Fragment() {
@@ -65,7 +65,6 @@ class CharactersFragment : Fragment() {
         val adapterWithLoadState = charactersAdapter?.withLoadStateFooter(footerAdapter)
 
         charactersAdapter?.itemClickListener = ::onCharacterClick
-        charactersAdapter?.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
 
         val gridLayoutManager = GridLayoutManager(context,  2)
         gridLayoutManager.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
